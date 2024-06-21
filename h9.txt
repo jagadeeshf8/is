@@ -1,0 +1,18 @@
+
+!pip install pycryptodome
+from Crypto.Cipher import DES
+from Crypto.Util.Padding import pad, unpad
+
+def encrypt_decrypt(password, key):
+    cipher = DES.new(key, DES.MODE_ECB)  # Create a DES cipher object in ECB mode
+    padded_password = pad(password, DES.block_size)  # Pad the password to the block size
+    encrypted = cipher.encrypt(padded_password)  # Encrypt the padded password
+    decrypted = unpad(cipher.decrypt(encrypted), DES.block_size)  # Decrypt and unpad the encrypted password
+    return encrypted, decrypted
+
+# Example usage:
+password = b"Password"  # Password as bytes
+key = b'mycipher'  # Key must be exactly 8 bytes for DES
+enc_pass, dec_pass = encrypt_decrypt(password, key)
+print("Encrypted:", enc_pass)
+print("Decrypted:", dec_pass)
