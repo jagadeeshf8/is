@@ -1,0 +1,6 @@
+import hashlib
+
+tr = "TTt"
+result = hashlib.sha1(tr.encode())
+print("The hexadecimal equivalent of SHA1 is :")
+print(result.hexdigest())
