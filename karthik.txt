@@ -1,0 +1,27 @@
+def encode(key, plaintext):
+    order = {int(val): num for num, val in enumerate(key)}
+    cols = len(key)
+    return ''.join(plaintext[i::cols] for i in sorted(order.values()))
+
+def decode(key, ciphertext):
+    order = {int(val): num for num, val in enumerate(key)}
+    cols = (len(ciphertext) + len(key) - 1) // len(key)
+    rows = len(key)
+    plaintext = [''] * len(ciphertext)
+    index = 0
+    for col in range(cols):
+        for row in range(rows):
+            pos = col + cols * order[row + 1]
+            if pos < len(ciphertext):
+                plaintext[pos] = ciphertext[index]
+                index += 1
+    return ''.join(plaintext)
+
+plaintext = 'HELLO'
+key = '3214'
+
+ciphertext = encode(key, plaintext)
+print("Encryption:", ciphertext)
+
+decrypted_text = decode(key, ciphertext)
+print("Decryption:", decrypted_text)
